@@ -12,8 +12,8 @@
 using namespace std;
 using namespace QUESO;
 
-template<class V = QUESO::GslVector, class M = QUESO::GslMatrix>
-class Likelihood : public QUESO::BaseScalarFunction<V,M>{
+template<class V = GslVector, class M = GslMatrix>
+class Likelihood : public BaseScalarFunction<V,M>{
     private:
         vector<double> data_mean; //exponencial model results
         vector<double> t; //values of a

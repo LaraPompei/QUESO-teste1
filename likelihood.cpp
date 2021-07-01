@@ -33,4 +33,4 @@ double Likelihood<V,M>::actualValue(const V & domainVector, const V * domainDire
     return exp(thiss->lnValue(domainVector));
 }
 
-template class Likelihood<QUESO::GslVector, QUESO::GslMatrix>;
+ template class Likelihood<GslVector,GslMatrix>;
