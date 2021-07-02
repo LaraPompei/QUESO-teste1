@@ -1,14 +1,8 @@
-QUESO_DIR = $home/LIBRARIES/QUESO-0.50.0/
-BOOST_DIR = $usr/local/lib/
-GSL_DIR = $usr/local/
-GRV_DIR = $
-TRILINOS_DIR = $
+QUESO_DIR = /home/LIBRARIES/QUESO-0.50.0/
+BOOST_DIR = /usr/local/lib
+GSL_DIR = /usr/local/lib
 
-INC_PATHS = \
-	-I. \
-	-I$(QUESODIR)/include \
-	-I$(BOOST_DIR)/lib/boost/ \
-	-I$(GSL_DIR)/include/gsl/ \
+INC_PATHS += -I. -I$(QUESO_DIR)/include -I$(BOOST_DIR)/lib/boost/ -I$(GSL_DIR)/include/gsl/ 
 
 LIBS = \
 	-L$(QUESO_DIR)/lib -lqueso \
@@ -22,15 +16,15 @@ default: all
 
 .SUFFIXES: .o .C
 
-all: ex_gsl
+all: gsl
 
 clean:
 	rm -f *~
 	rm -f *.o
-%	rm -f example_gsl
 
-ex_gsl: example_main.o example_likelihood.o example_qoi.o example_compute.o
-	$(CXX) example_main.o example_likelihood.o example_qoi.o \
-		example_compute.o -o example_gsl $(LIBS)
-%.o: %.C
+gsl: main.o likelihood.o compute.o
+	$(CXX) main.o likelihood.o compute.o -o gsl $(LIBS)
+
+%.o:%.cpp
+	echo $(INC_PATHS)
 	$(CXX) $(INC_PATHS) $(CXXFLAGS) $<
