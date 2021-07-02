@@ -15,9 +15,9 @@ using namespace QUESO;
 template<class V = GslVector, class M = GslMatrix>
 class Likelihood : public BaseScalarFunction<V,M>{
     private:
-        vector<double> data_mean; //exponencial model results
-        vector<double> t; //values of a
-        vector<double> stdDevs; //account for uncertainties
+        vector<double> m_data_mean; //exponencial model results
+        vector<double> m_t; //values of a
+        vector<double> m_stdDevs; //account for uncertainties
         double size;
         int poi;
         const QUESO::BaseEnvironment* m_env;

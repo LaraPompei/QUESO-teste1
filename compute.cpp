@@ -61,14 +61,11 @@ void compute(const FullEnvironment& env){
 
     //vector t is filled with [0.0,5.5] interval catching each number after 0.5
     for(int i =0; i<tam;i++){
-        t[i] = (i)*0.5;
+        t[i] = (i)*spacing_points;
     }
 
     //Generating and fillling the matrix, which the lanes represent the samples(yvalues) and the columns represent the date in each point of time(t)
-    filling_matrix(number_samples, t, values_a, data);
-    //defining t value in which the function will be evaluated
-    double t_ = t[poi];
-
+    filling_matrix(number_samples, data_mean, t, data);
     //mean of data
     for(int j=0; j < tam; j++){
         for(int i = 0; i < tam; i++){
@@ -90,7 +87,7 @@ void compute(const FullEnvironment& env){
         cout<<"Para t = "<<i<<endl<<"Data mean: "<<data_mean[i]<<endl<<"Data standard deviation: "<<data_std[i]<<endl;
     }
 
-    Likelihood<> lhood("like_", paramDomain, data[poi], values_a, data_std);
+    Likelihood<> lhood("like_", paramDomain, data_mean, t, data_std, poi);
 
     //define the prior RV
     UniformVectorRV<> priorRv("prior_", paramDomain);
