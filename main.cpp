@@ -1,6 +1,6 @@
 #include "compute.h"
 
-int main() {
+int main(int argc, char* argv[]) {
     // Initialize QUESO environment
 
 #ifndef QUESO_HAS_MPI

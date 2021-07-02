@@ -16,14 +16,14 @@ default: all
 
 .SUFFIXES: .o .C
 
-all: gsl
+all: teste1_gsl
 
 clean:
 	rm -f *~
 	rm -f *.o
 
-gsl: main.o likelihood.o compute.o
-	$(CXX) main.o likelihood.o compute.o -o gsl $(LIBS)
+teste1_gsl: main.o likelihood.o compute.o
+	$(CXX) main.o likelihood.o compute.o -o teste1_gsl $(LIBS)
 
 %.o:%.cpp
 	echo $(INC_PATHS)
