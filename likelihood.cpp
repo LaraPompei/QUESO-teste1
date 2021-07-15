@@ -16,12 +16,9 @@ double Likelihood<V, M>::lnValue(const V& domainVector) const{
     double a = domainVector[0];
     //cout<<"a = "<<domainVector[0]<<endl;
 
-    double misfitValue = 0.0;    
     double model = exp(-a*m_t[poi]);
     double error_A = abs((model - m_data_mean[0])/m_stdDevs[0]);
-    misfitValue += error_A * error_A;
-    //return error_A;
-    return -0.5*misfitValue;
+    return error_A;
 }
 
 
