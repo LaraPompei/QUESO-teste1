@@ -11,8 +11,8 @@ void filling_matrix(int& number_samples, double* t, double* values_a, double** d
     engine.seed(dev());
 
     // setup a distribution:
-    double mu    = 0.5;
-    double sigma = 2.0;
+    double mu    = 0.5; //Mean value of the normal distribution
+    double sigma = 0.2; //Standard deviation of the normal distribution
     lognormal_distribution<double> dist(mu, sigma);
     for (int i =0; i<number_samples; i++) {
         values_a[i] = dist(engine);
@@ -22,18 +22,28 @@ void filling_matrix(int& number_samples, double* t, double* values_a, double** d
         for(int j=0;j<tam; j++){
             lane[j] = exp(-values_a[i]*t[j]);
             data[i][j] = lane[j];
+            //cerr<<data[i][j]<<" ";
         }
+        //cerr<<endl<<endl;
     }
 }
 
+
 void compute(const FullEnvironment& env){
-     //SIP:
-  
+    struct timeval timevalNow;
+
+    gettimeofday(&timevalNow, NULL);
+    if (env.fullRank() == 0){
+        cout<<"\nBeginning run of 'Example 1: Log-Normal Distribution Function (0.5,.2)' example at "<<ctime(&timevalNow.tv_sec)<<endl;
+    }  
+    env.fullComm().Barrier();
+    env.subComm().Barrier();
+
     //instantiating the parameter space
     cerr<<"instantiating the parameter space.."<<endl;    
     VectorSpace<> paramSpace(env, "param_", 1, NULL);
     
-    //instantiating the parameter domain
+    //defining the domain of a
     cerr<<"instantiating the parameter domain"<<endl;
     GslVector paramMinValues(paramSpace.zeroVector());
     GslVector paramMaxValues(paramSpace.zeroVector());
@@ -48,8 +58,10 @@ void compute(const FullEnvironment& env){
     double* t             = new double[tam];
     double* values_a      = new double[number_samples];
     double** data         = new double*[number_samples];
-    double* data_mean     = new double[number_samples]{0};
-    double* data_std      = new double[number_samples]{0};
+    double data_mean      = 0;
+    double data_std       = 0;
+    //double* data_mean     = new double[number_samples]{0};
+    //double* data_std      = new double[number_samples]{0};
 
     //use poi = 1 if t = 0.5, 2 if t = 1.0; 3 if t = 2.5, 4 if t=2.0,...
     int poi = 3; //point of interest
@@ -61,29 +73,38 @@ void compute(const FullEnvironment& env){
     }
 
     //vector t is filled with [0.0,5.5] interval catching each number after 0.5
-    cerr<<"Filling vector t"<<endl;
+    cerr<<"Filling vector t"<<endl<<"t[ ";
     for(int i =0; i<tam;i++){
         t[i] = (i)*spacing_points;
+        cerr<<t[i]<<" "<<endl;
     }
+    cerr<<endl;
 
-    //Generating and fillling the matrix, which the lanes represent the samples(yvalues) and the columns represent the date in each point of time(t)
+    //Generating and fillling the matrix, each element of data is a sample(y(t)=e^(-a*t), each row is a differente t and each column is a different a
     cerr<<"Generating and filling the matrix"<<endl;
     filling_matrix(number_samples, t, values_a, data);
 
-    //mean of data
+    //mean of the data
     cerr<<"Calculating the mean of the data"<<endl;
-    for(int j=0; j < tam; j++){
+    /*for(int j=0; j < tam; j++){
         for(int i = 0; i < tam; i++){
             data_mean[j] += data[i][j];
         }
     }
     for(int i = 0; i < tam; i++){
         data_mean[i] = data_mean[i]/number_samples;
+    }*/
+    cerr<<"data[poi][] = [ ";
+    for(int i = 0; i < number_samples; i++){
+        data_mean = data[poi][i];
+        cerr<<data[poi][i]<<" ";
     }
-
+    cerr<<" ]"<<endl;
+    data_mean = data_mean/number_samples;
+    cerr<<"Data_mean = "<<data_mean<<endl;
     //data standard deviation
     cerr<<"Calculating the standard deviation"<<endl;
-    for(int j = 0; j < tam; j++){
+    /*for(int j = 0; j < tam; j++){
         for(int i = 0; i<number_samples; i++){
             data_std[j] += pow((data[i][j] - data_mean[j]),2);
         }
@@ -91,9 +112,15 @@ void compute(const FullEnvironment& env){
     for(int i = 0; i <tam; i++){
         data_std[i] = sqrt(data_std[i]/number_samples);
         cout<<"Para t = "<<i<<endl<<"Data mean: "<<data_mean[i]<<endl<<"Data standard deviation: "<<data_std[i]<<endl;
+    }*/
+    for(int i = 0; i<number_samples; i++){
+        data_std += pow((data[i][poi] - data_mean),2);
     }
+    data_std = sqrt(data_std/number_samples);
+    cerr<<"Para t = "<<poi<<endl<<"Data mean: "<<data_mean<<endl<<"Data standard deviation: "<<data_std<<endl;
+
     cerr<<"Creating the likelihood object"<<endl;
-    Likelihood<> lhood("like_", paramDomain, data_mean, t, data_std, poi);
+    Likelihood<> lhood("like_", paramDomain, &data_mean, t, &data_std, poi, tam);
 
     //define the prior RV
     cerr<<"Defining the prior RV"<<endl;
@@ -113,5 +140,9 @@ void compute(const FullEnvironment& env){
     proposalCovMatrix(0,0) = pow(abs(paramInitials[0])/20.0, 2.0);
 
     ip.solveWithBayesMetropolisHastings(NULL, paramInitials, &proposalCovMatrix);
-    
+    if (env.fullRank() == 0) {
+        cout << "Ending run of 'Example 1: Log-Normal Distribution Function (0.5,.2)' example at "
+              << ctime(&timevalNow.tv_sec)
+              << std::endl;
+  }    
 }

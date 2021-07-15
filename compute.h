@@ -11,6 +11,7 @@
 #include <queso/StatisticalInverseProblem.h>
 #include <queso/StatisticalForwardProblem.h>
 
+#include <sys/time.h>
 #include <random>
 #include <iostream>
 #include <math.h>

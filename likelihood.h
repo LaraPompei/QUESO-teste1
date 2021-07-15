@@ -18,12 +18,11 @@ class Likelihood : public BaseScalarFunction<V,M>{
         vector<double> m_data_mean; //exponencial model results
         vector<double> m_t; //values of a
         vector<double> m_stdDevs; //account for uncertainties
-        double size;
         int poi;
         const QUESO::BaseEnvironment* m_env;
    
    public:
-        Likelihood(const char* prefix, const VectorSet<V, M>& domain, const double* m_data_mean, const double* m_t, const double* m_srdDevs, const double& poi);
+        Likelihood(const char* prefix, const VectorSet<V, M>& domain, const double* m_data_mean, const double* m_t, const double* m_srdDevs, const double& poi, const double& s);
         virtual ~Likelihood();
         virtual double lnValue(const V& domainVector) const;
         virtual double actualValue(const V& domainVector, const V* domainDirection, V* gradVector, M* hessianMatrix, V* hessianEffect) const;
