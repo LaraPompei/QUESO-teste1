@@ -2,8 +2,10 @@
 #include "likelihood.h"
 
 #define tam 12
+#define poi 3
+#define number_samples 10000
 
-void filling_matrix(int& number_samples, double* t, double* values_a, double** data){
+void filling_matrix(double* t, double* values_a, double** data){
     mt19937 engine; // uniform random bit engine
 
     // seed the URBG
@@ -54,7 +56,7 @@ void compute(const FullEnvironment& env){
     //instantiating the likelihood function object
     cerr<<"instantiating the likelihood function object and generating the samples"<<endl;
     double spacing_points = 0.5;
-    int number_samples    = 10000;
+    //int number_samples    = 10000;
     double* t             = new double[tam];
     double* values_a      = new double[number_samples];
     double** data         = new double*[number_samples];
@@ -64,7 +66,7 @@ void compute(const FullEnvironment& env){
     //double* data_std      = new double[number_samples]{0};
 
     //use poi = 1 if t = 0.5, 2 if t = 1.0; 3 if t = 2.5, 4 if t=2.0,...
-    int poi = 3; //point of interest
+    //int poi = 3; //point of interest
 
     //memory allocation for the matrix data [number_samplesxtam]
     cerr<<"allocating memory for the data matrix"<<endl;
@@ -82,7 +84,7 @@ void compute(const FullEnvironment& env){
 
     //Generating and fillling the matrix, each element of data is a sample(y(t)=e^(-a*t), each row is a differente t and each column is a different a
     cerr<<"Generating and filling the matrix"<<endl;
-    filling_matrix(number_samples, t, values_a, data);
+    filling_matrix(t, values_a, data);
 
     //mean of the data
     cerr<<"Calculating the mean of the data"<<endl;
@@ -121,7 +123,6 @@ void compute(const FullEnvironment& env){
 
     cerr<<"Creating the likelihood object"<<endl;
     Likelihood<> lhood("like_", paramDomain, &data_mean, t, &data_std, poi, tam);
-
     //define the prior RV
     cerr<<"Defining the prior RV"<<endl;
     UniformVectorRV<> priorRv("prior_", paramDomain);
@@ -144,5 +145,21 @@ void compute(const FullEnvironment& env){
         cout << "Ending run of 'Example 1: Log-Normal Distribution Function (0.5,.2)' example at "
               << ctime(&timevalNow.tv_sec)
               << std::endl;
-  }    
+    }    
+    save_data(NULL,data,NULL);
+}
+
+void save_data(double* model, double** data, double* values_of_a){
+    fstream a_data, a_mcmc;
+    char fileName[100];
+
+    sprintf(fileName, "a_data.m");
+    a_data.open(fileName, ios_base::out);
+    a_data<<"a_data = zeros(0,5.5)"<<endl
+        <<"a_data = [";
+    for(int i=0 ; i<number_samples; i++){
+        a_data<<data[i][poi]<<endl;
+    }
+    a_data<<"];"<<endl;
+    a_data.close();
 }

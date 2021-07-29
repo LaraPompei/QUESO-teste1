@@ -17,7 +17,7 @@ GRVY DIR     =
 GLPK DIR     = 
 HDF5 DIR     = 
 --------------------------------------------------------------------------------------------------------------
-Beginning run at Thu Jul 15 14:39:06 2021
+Beginning run at Thu Jul 29 12:38:08 2021
 
 Entering StatisticalInverseProblem<P_V,P_M>::constructor(): prefix = , alternativeOptionsValues = 0, m_env.optionsInputFileName() = main.inp
 Leaving StatisticalInverseProblem<P_V,P_M>::constructor(): prefix = ip_
@@ -42,23 +42,23 @@ Finished generating 18000 positions, current rejection percentage = 0.05 %
 Finished generating 20000 positions, current rejection percentage = 0.045 %
 Finished the generation of Markov chain ip_mh_rawChain, with sub 20000 positions
 Some information about this chain:
-  Chain run time       = 0.171686 seconds
+  Chain run time       = 0.129939 seconds
 
  Breaking of the chain run time:
 
-  Candidate run time   = 0.045887 seconds (26.7273%)
-  Num target calls  = 20148
-  Target d. run time   = 0.003477 seconds (2.02521%)
-  Avg target run time   = 1.72573e-07 seconds
-  Mh alpha run time    = 0.095081 seconds (55.3808%)
-  Dr alpha run time    = 0.00464 seconds (2.70261%)
+  Candidate run time   = 0.035464 seconds (27.2928%)
+  Num target calls  = 20140
+  Target d. run time   = 0.002661 seconds (2.04788%)
+  Avg target run time   = 1.32125e-07 seconds
+  Mh alpha run time    = 0.071827 seconds (55.2775%)
+  Dr alpha run time    = 0.003683 seconds (2.83441%)
 ----------------------   --------------
-  Sum                  = 0.149085 seconds (86.8359%)
+  Sum                  = 0.113635 seconds (87.4526%)
 
  Other run times:
-  DR run time          = 0.005245 seconds (3.055%)
+  DR run time          = 0.004142 seconds (3.18765%)
   AM run time          = 0 seconds (0%)
-  Number of DRs = 148(num_DRs/chain_size = 0.0074)
+  Number of DRs = 140(num_DRs/chain_size = 0.007)
   Out of target support in DR = 0
   Rejection percentage = 0.045 %
   Out of target support percentage = 0 %
@@ -68,19 +68,19 @@ In MetropolisHastingsSG<P_V,P_M>::generateSequence(), prefix = ip_mh_, raw chain
 In MetropolisHastingsSG<P_V,P_M>::generateSequence(): just wrote (per period request) remaining 20000 chain positions , 0 <= pos <= 19999
 Entering BaseVectorSequence<V,M>::subPositionsOfMaximum(): subCorrespondingScalarValues,subSequenceSize() = 20000, this->subSequenceSize = 20000
 Leaving BaseVectorSequence<V,M>::subPositionsOfMaximum()
-In MetropolisHastingsSG<P_V,P_M>::generateSequence(): just computed MLE, rawSubMLEvalue = 9.40931, rawSubMLEpositions.subSequenceSize() = 1, rawSubMLEpositions[0] = 0.040953 
+In MetropolisHastingsSG<P_V,P_M>::generateSequence(): just computed MLE, rawSubMLEvalue = 9.52915, rawSubMLEpositions.subSequenceSize() = 1, rawSubMLEpositions[0] = 0.036679 
 Entering BaseVectorSequence<V,M>::subPositionsOfMaximum(): subCorrespondingScalarValues,subSequenceSize() = 20000, this->subSequenceSize = 20000
 Leaving BaseVectorSequence<V,M>::subPositionsOfMaximum()
-In MetropolisHastingsSG<P_V,P_M>::generateSequence(): just computed MAP, rawSubMAPvalue = 7.61755, rawSubMAPpositions.subSequenceSize() = 1, rawSubMAPpositions[0] = 0.040953 
+In MetropolisHastingsSG<P_V,P_M>::generateSequence(): just computed MAP, rawSubMAPvalue = 7.7374, rawSubMAPpositions.subSequenceSize() = 1, rawSubMAPpositions[0] = 0.036679 
 In MetropolisHastingsSG<P_V,P_M>::generateSequence(), prefix = ip_mh_, raw chain name = ip_mh_rawChain: returned from writing raw sub chain output file 'outputData/sipOutput_raw_chain.m', subId = 0
 In MetropolisHastingsSG<P_V,P_M>::generateSequence(), prefix = ip_mh_, raw chain name = ip_mh_rawChain: about to try to write raw unified chain output file 'outputData/sipOutput_raw_chain.m', subId = 0...
 In MetropolisHastingsSG<P_V,P_M>::generateSequence(), prefix = ip_mh_, raw chain name = ip_mh_rawChain: returned from writing raw unified chain output file 'outputData/sipOutput_raw_chain.m', subId = 0
 Entering BaseVectorSequence<V,M>::unifiedPositionsOfMaximum(): subCorrespondingScalarValues,subSequenceSize() = 20000, this->subSequenceSize = 20000
 Leaving BaseVectorSequence<V,M>::unifiedPositionsOfMaximum()
-In MetropolisHastingsSG<P_V,P_M>::generateSequence(): just computed MLE, rawUnifiedMLEvalue = 9.40931, rawUnifiedMLEpositions.subSequenceSize() = 1, rawUnifiedMLEpositions[0] = 0.040953 
+In MetropolisHastingsSG<P_V,P_M>::generateSequence(): just computed MLE, rawUnifiedMLEvalue = 9.52915, rawUnifiedMLEpositions.subSequenceSize() = 1, rawUnifiedMLEpositions[0] = 0.036679 
 Entering BaseVectorSequence<V,M>::unifiedPositionsOfMaximum(): subCorrespondingScalarValues,subSequenceSize() = 20000, this->subSequenceSize = 20000
 Leaving BaseVectorSequence<V,M>::unifiedPositionsOfMaximum()
-In MetropolisHastingsSG<P_V,P_M>::generateSequence(): just computed MAP, rawUnifiedMAPvalue = 7.61755, rawUnifiedMAPpositions.subSequenceSize() = 1, rawUnifiedMAPpositions[0] = 0.040953 
+In MetropolisHastingsSG<P_V,P_M>::generateSequence(): just computed MAP, rawUnifiedMAPvalue = 7.7374, rawUnifiedMAPpositions.subSequenceSize() = 1, rawUnifiedMAPpositions[0] = 0.036679 
 
 
 -----------------------------------------------------
@@ -105,5 +105,5 @@ In MetropolisHastingsSG<P_V,P_M>::generateSequence(), prefix = ip_mh_: closed ge
 
 In SequentialVectorRealizer<V,M>::constructor(): m_chain.subSequenceSize() = 1000
 
-Ending run at Thu Jul 15 14:39:07 2021
+Ending run at Thu Jul 29 12:38:09 2021
 Total run time = 1 seconds

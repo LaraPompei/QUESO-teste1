@@ -16,8 +16,9 @@ template<class V = GslVector, class M = GslMatrix>
 class Likelihood : public BaseScalarFunction<V,M>{
     private:
         vector<double> m_data_mean; //exponencial model results
-        vector<double> m_t; //values of a
+        vector<double> m_t; //values of t 
         vector<double> m_stdDevs; //account for uncertainties
+        static const vector<double> values_of_a;
         int poi;
         const QUESO::BaseEnvironment* m_env;
    
