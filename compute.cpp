@@ -2,7 +2,7 @@
 #include "likelihood.h"
 
 #define tam 12
-#define poi 3
+#define poi 1
 #define number_samples 10000
 
 void filling_matrix(double* t, double* values_a, double** data){
@@ -16,17 +16,21 @@ void filling_matrix(double* t, double* values_a, double** data){
     double mu    = 0.5; //Mean value of the normal distribution
     double sigma = 0.2; //Standard deviation of the normal distribution
     lognormal_distribution<double> dist(mu, sigma);
+    cerr<<"a_distribuition = [";
     for (int i =0; i<number_samples; i++) {
         values_a[i] = dist(engine);
-        cerr<<values_a[i]<<" "<<i<<endl;
+        cerr<<values_a[i]<<" ";
     }
+    cerr<<"]"<<endl<<endl;
+    //    <<"data_distribuition = [ ";
     for(int i=0; i<number_samples; i++){
         for(int j=0;j<tam; j++){
             data[i][j] = exp(-values_a[i]*t[j]);
-            cerr<<data[i][j]<<" ";
+            //cerr<<data[i][j]<<" ";
         }
-        cerr<<"\t"<<i<<endl<<endl;
+        //cerr<<"\t"<<i<<endl<<endl;
     }
+    //cerr<<"]"<<endl;
 }
 
 
@@ -75,7 +79,7 @@ void compute(const FullEnvironment& env){
     }
     cerr<<"]"<<endl;
 
-    //Generating and fillling the matrix, each element of data is a sample(y(t)=e^(-a*t), each row is a differente t and each column is a different a
+    //Generating and fillling the matrix, each element of data is a sample(y(t)=e^(-a*t), each row is an 'a' value while each column is a different t
     cerr<<"Generating and filling the matrix"<<endl;
     filling_matrix(t, values_a, data);
 
@@ -100,7 +104,9 @@ void compute(const FullEnvironment& env){
     cerr<<"Para t = "<<poi<<endl<<"Data mean: "<<data_mean<<endl<<"Data standard deviation: "<<data_std<<endl;
 
     cerr<<"Creating the likelihood object"<<endl;
+    
     Likelihood<> lhood("like_", paramDomain, &data_mean, t, &data_std, poi, tam);
+    
     //define the prior RV
     cerr<<"Defining the prior RV"<<endl;
     UniformVectorRV<> priorRv("prior_", paramDomain);
@@ -118,7 +124,7 @@ void compute(const FullEnvironment& env){
     GslMatrix proposalCovMatrix(paramSpace.zeroVector());
     
     proposalCovMatrix(0,0) = pow(abs(paramInitials[0])/20.0, 2.0);
-    cerr<<"a = [";
+    cerr<<"a_likelihood = [";
     ip.solveWithBayesMetropolisHastings(NULL, paramInitials, &proposalCovMatrix);
     cerr<<"]"<<endl;
     if (env.fullRank() == 0) {
@@ -126,18 +132,14 @@ void compute(const FullEnvironment& env){
               << ctime(&timevalNow.tv_sec)
               << std::endl;
     }
-    cerr<<"values of a = [";
-    for(int i =0 ;i<number_samples ; i++){
-        cerr<<values_a[i]<<" ";
-    }
-    cerr<<"]"<<endl;
-    save_data(NULL,values_a,NULL);
+    save_data(NULL,data,values_a,NULL);
 }
 
-void save_data(double* model, double* data, double* values_of_a){
-    fstream a_data, a_mcmc;
-    char fileName[100];
+void save_data(double* model, double** baseModel, double* data, double* values_of_a){
+    fstream a_data, a_mcmc, model_data, model_mcmc;
+    char fileName[50];
 
+    //writing original a on file
     sprintf(fileName, "a_data.m");
     a_data.open(fileName, ios_base::out);
     a_data<<"a_data = [";
@@ -146,4 +148,18 @@ void save_data(double* model, double* data, double* values_of_a){
     }
     a_data<<"];"<<endl;
     a_data.close();
+
+    //writing original model on file
+    sprintf(fileName, "model_data.m");
+    model_data.open(fileName, ios_base::out);
+    model_data<<"model_data = [";
+    for(int i=0 ; i<number_samples; i++){
+        model_data<<baseModel[i][poi]<<endl;
+    }
+    model_data<<"];"<<endl;
+    model_data.close();
+
+    //writing mcmc a on file
+     
+    //writing mcmc model on file
 }

@@ -6,7 +6,7 @@
 #include <queso/GslMatrix.h>
 #include <queso/GenericVectorFunction.h>
 #include <queso/GaussianVectorRV.h>
-#include <queso/UniformVectorRV.h>
+#include <queso/LogNormalVectorRV.h>
 #include <queso/GenericVectorRV.h>
 #include <queso/StatisticalInverseProblem.h>
 #include <queso/StatisticalForwardProblem.h>
@@ -25,5 +25,5 @@ using namespace std;
 
 void compute(const FullEnvironment& env);
 void filling_matrix(double* t, double* values_a, double** data);
-void save_data(double* model, double* data, double* values_of_a);
+void save_data(double* model, double** baseModel, double* data, double* values_of_a);
 #endif
