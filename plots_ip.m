@@ -37,7 +37,7 @@ hist(ip_mh_rawChain_unified,nbins);
 h = findobj(gca,'Type','patch');
 set(h,'FaceColor','b','EdgeColor','w');%
 title('Parameter Histogram (raw chain, nbins=100)','fontname', 'Times', 'fontsize',20);
-xlabel('y(t)','fontname', 'Times', 'fontsize',20);
+xlabel('a','fontname', 'Times', 'fontsize',20);
 ylabel('Frequency','fontname', 'Times', 'fontsize',20);
 grid on;
 set(gca,'FontSize',16);
@@ -51,7 +51,7 @@ hist(ip_mh_filtChain_unified,nbins);
 h = findobj(gca,'Type','patch');
 set(h,'FaceColor','r','EdgeColor','w');%
 title('Parameter Histogram (filtered chain, nbins=100)','fontname', 'Times', 'fontsize',20);
-xlabel('y(t)','fontname', 'Times', 'fontsize',20);
+xlabel('a','fontname', 'Times', 'fontsize',20);
 ylabel('Frequency','fontname', 'Times', 'fontsize',20);
 grid on;
 set(gca,'FontSize',16);
@@ -61,56 +61,60 @@ clf;
 
 % KDE plots ---------------------------------------------------------------
 % RAW
-%fprintf(1,' Plotting KDE - raw  <press any key>\n');
-%[f,xi] = kernel_density(ip_mh_rawChain_unified,'function','pdf');
-%plot(xi,f,'-b','linewidth',3)
-%title('Parameter Kernel Density Estimation (raw chain)','fontname', 'Times', 'fontsize',20);
-%xlabel('y(t)','fontname', 'Times', 'fontsize',20);
-%ylabel('KDE','fontname', 'Times', 'fontsize',20);
-%grid on;
-%set(gca,'FontSize',16);
-%print -dpng sip_kde_raw.png
-%pause;
-%clf;
+fprintf(1,' Plotting KDE - raw  <press any key>\n');
+[f,xi] = ksdensity(ip_mh_rawChain_unified,'function','pdf')
+fprintf("");
+plot(xi,f,'-b','linewidth',3)
+title('Parameter Kernel Density Estimation (raw chain)','fontname', 'Times', 'fontsize',20);
+xlabel('a','fontname', 'Times', 'fontsize',20);
+ylabel('KDE','fontname', 'Times', 'fontsize',20);
+grid on;
+set(gca,'FontSize',16);
+print -dpng sip_kde_raw.png
+pause;
+clf;
 
 %FILTERED
-%fprintf(1,' Plotting KDE - filtered  <press any key>\n');
-%[f,xi] = kernel_density(ip_mh_filtChain_unified,'function','pdf');
-%plot(xi,f,'-r','linewidth',3)
-%title('Parameter Kernel Density Estimation (filtered chain)','fontname', 'Times', 'fontsize',20);
-%xlabel('y(t)','fontname', 'Times', 'fontsize',20);
-%ylabel('KDE','fontname', 'Times', 'fontsize',20);
-%grid on;
-%set(gca,'FontSize',16);
-%print -dpng sip_kde_filt.png
-%pause;
-%clf;
+fprintf(1,' Plotting KDE - filtered  <press any key>\n');
+[f,xi] = ksdensity(ip_mh_filtChain_unified,'function','pdf')
+fprintf(" ");
+plot(xi,f,'-r','linewidth',3)
+title('Parameter Kernel Density Estimation (filtered chain)','fontname', 'Times', 'fontsize',20);
+xlabel('a','fontname', 'Times', 'fontsize',20);
+ylabel('KDE','fontname', 'Times', 'fontsize',20);
+grid on;
+set(gca,'FontSize',16);
+print -dpng sip_kde_filt.png
+pause;
+clf;
 
 % CDF plots ---------------------------------------------------------------
 % RAW
-%fprintf(1,' Plotting CDF - raw  <press any key>\n');
-%[f,xi] = kernel_density(ip_mh_rawChain_unified,'function','cdf');
-%plot(xi,f,'-b','linewidth',3)
-%title('Parameter Cumulative Distribution Function (raw chain)','fontname', 'Times', 'fontsize',20);
-%xlabel('y(t)','fontname', 'Times', 'fontsize',20);
-%ylabel('CDF','fontname', 'Times', 'fontsize',20);
-%grid on;
-%set(gca,'FontSize',16);
-%print -dpng sip_cdf_raw.png
-%pause;
-%clf;
+fprintf(1,' Plotting CDF - raw  <press any key>\n');
+[f,xi] = ksdensity(ip_mh_rawChain_unified,'function','cdf');
+fprintf("");
+plot(xi,f,'-b','linewidth',3)
+title('Parameter Cumulative Distribution Function (raw chain)','fontname', 'Times', 'fontsize',20);
+xlabel('a','fontname', 'Times', 'fontsize',20);
+ylabel('CDF','fontname', 'Times', 'fontsize',20);
+grid on;
+set(gca,'FontSize',16);
+print -dpng sip_cdf_raw.png
+pause;
+clf;
 
 %FILTERED
-%fprintf(1,' Plotting CDF - filtered  <press any key>\n');
-%[f,xi] = kernel_density(ip_mh_filtChain_unified,'function','cdf');
-%plot(xi,f,'-r','linewidth',3)
-%title('Parameter Cumulative Distribution Function (filtered chain)','fontname', 'Times', 'fontsize',20);
-%xlabel('y(t)','fontname', 'Times', 'fontsize',20);
-%ylabel('CDF','fontname', 'Times', 'fontsize',20);
-%grid on;
-%set(gca,'FontSize',16);
-%print -dpng sip_cdf_filt.png
-%pause;
+fprintf(1,' Plotting CDF - filtered  <press any key>\n');
+[f,xi] = ksdensity(ip_mh_filtChain_unified,'function','cdf');
+fprintf("");
+plot(xi,f,'-r','linewidth',3)
+title('Parameter Cumulative Distribution Function (filtered chain)','fontname', 'Times', 'fontsize',20);
+xlabel('a','fontname', 'Times', 'fontsize',20);
+ylabel('CDF','fontname', 'Times', 'fontsize',20);
+grid on;
+set(gca,'FontSize',16);
+print -dpng sip_cdf_filt.png
+pause;
 %clf;
 
 % Autocorrelation plots ---------------------------------------------------
