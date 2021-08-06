@@ -2,7 +2,7 @@
 #include "likelihood.h"
 
 #define tam 12
-#define poi 1
+#define poi 3 
 #define number_samples 10000
 
 void filling_matrix(double* t, double* values_a, double** data){

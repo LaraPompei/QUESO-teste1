@@ -3,7 +3,7 @@ a_data
 model_data
 % Histogram plots ---------------------------------------------------------
 % a_data
-nbins=9;
+nbins=100;
 hist(a_data,nbins);
 h = findobj(gca,'Type','patch');
 set(h,'FaceColor','b','EdgeColor','w');%

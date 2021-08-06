@@ -23,7 +23,7 @@ ylabel('\theta=a','fontname', 'Times', 'fontsize',20);
 xlabel('Number of positions','fontname', 'Times', 'fontsize',20);
 title('DRAM MCMC Chain Positions (filtered)','fontname', 'Times', 'fontsize',20);
 a=axis;
-axis([a(1) a(2) 0.0 1.0]);
+axis([a(1) a(2) 0.0 6.0]);
 set(gca,'FontSize',16);
 print -dpng sip_chain_pos_filt.png
 pause;
@@ -32,7 +32,7 @@ clf;
 % Histogram plots ---------------------------------------------------------
 % RAW
 fprintf(1,' Plotting histogram - raw  <press any key>\n');
-nbins=9;
+nbins=100;
 hist(ip_mh_rawChain_unified,nbins);
 h = findobj(gca,'Type','patch');
 set(h,'FaceColor','b','EdgeColor','w');%
