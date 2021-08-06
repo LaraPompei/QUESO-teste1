@@ -83,7 +83,7 @@ void compute(const FullEnvironment& env){
     cerr<<"Generating and filling the matrix"<<endl;
     filling_matrix(t, values_a, data);
 
-    //mean of the data
+    //data mean
     cerr<<"Calculating the mean of the data"<<endl;
     cerr<<"data[:][poi] = [ ";
     for(int i = 0; i < number_samples; i++){
