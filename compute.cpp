@@ -16,10 +16,10 @@ void filling_matrix(double* t, double* values_a, double** data){
     double mu    = 0.5; //Mean value of the normal distribution
     double sigma = 0.2; //Standard deviation of the normal distribution
     lognormal_distribution<double> dist(mu, sigma);
-    cerr<<"a_distribuition = [";
+    //cerr<<"a_distribuition = [";
     for (int i =0; i<number_samples; i++) {
         values_a[i] = dist(engine);
-        cerr<<values_a[i]<<" ";
+        //cerr<<values_a[i]<<" ";
     }
     cerr<<"]"<<endl<<endl;
     //    <<"data_distribuition = [ ";
@@ -53,7 +53,7 @@ void compute(const FullEnvironment& env){
     GslVector paramMinValues(paramSpace.zeroVector());
     GslVector paramMaxValues(paramSpace.zeroVector());
     paramMinValues[0] = 0.0;
-    paramMaxValues[0] = 6.0;
+    paramMaxValues[0] = 3.0;
     BoxSubset<> paramDomain("param_", paramSpace, paramMinValues, paramMaxValues);
     
     //instantiating the likelihood function object
@@ -85,12 +85,12 @@ void compute(const FullEnvironment& env){
 
     //data mean
     cerr<<"Calculating the mean of the data"<<endl;
-    cerr<<"data[:][poi] = [ ";
+    //cerr<<"data[:][poi] = [ ";
     for(int i = 0; i < number_samples; i++){
         data_mean += data[i][poi];
-        cerr<<data[i][poi]<<" ";
+        //cerr<<data[i][poi]<<" ";
     }
-    cerr<<" ]"<<endl;
+    //cerr<<" ]"<<endl;
     data_mean = data_mean/number_samples;
     cerr<<"Data_mean = "<<data_mean<<endl;
     
@@ -124,9 +124,9 @@ void compute(const FullEnvironment& env){
     GslMatrix proposalCovMatrix(paramSpace.zeroVector());
     
     proposalCovMatrix(0,0) = pow(abs(paramInitials[0])/20.0, 2.0);
-    cerr<<"a_likelihood = [";
+    //cerr<<"a_likelihood = [";
     ip.solveWithBayesMetropolisHastings(NULL, paramInitials, &proposalCovMatrix);
-    cerr<<"]"<<endl;
+    //cerr<<"]"<<endl;
     if (env.fullRank() == 0) {
         cout << "Ending run of 'Example 1: Log-Normal Distribution Function (0.5,.2)' example at "
               << ctime(&timevalNow.tv_sec)

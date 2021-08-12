@@ -46,3 +46,17 @@ ip_mh_rejected = 0.00295015;
 
 ip_mh_rejected = 0.00255013;
 
+ip_mh_rejected = 0.00215011;
+
+ip_mh_rejected = 0.00162001;
+
+ip_mh_rejected = 0.000655003;
+
+ip_mh_rejected = 0.00169501;
+
+ip_mh_rejected = 0.00210011;
+
+ip_mh_rejected = 0.00160001;
+
+ip_mh_rejected = 0.001475;
+
